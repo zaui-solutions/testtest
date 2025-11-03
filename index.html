@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elevation Guides // Mountain Expedition</title>
+    <!-- Load Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Inter Font --><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..900&display=swap" rel="stylesheet">
+    
+    <style>
+        .clean-bg {
+            background-color: #f4f7f6; /* Light, calming gray-green background */
+        }
+        
+        .primary-color {
+            color: #166534; /* Dark forest green */
+        }
+        .primary-bg {
+            background-color: #16a34a; /* Medium green */
+        }
+
+        /* Hero image styling */
+        .hero-section {
+            background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        /* Dark overlay for text readability on hero image */
+        .hero-overlay {
+            background-color: rgba(0, 0, 0, 0.4); /* Dark overlay */
+        }
+    </style>
+</head>
+<body class="clean-bg min-h-screen text-gray-800 font-[Inter] transition-colors duration-500">
+
+    <!-- Global Data Store for Translation --><script>
+        // Data structure holding all translatable strings
+        const contentData = {
+            en: {
+                site_title: "Elevation Guides",
+                lang_toggle: "Passer au Français",
+                hero_title: "Conquer the Peaks: The Sentry - Mt. Olive Traverse",
+                hero_subtitle: "Experience the ultimate 7-day high-altitude mountaineering expedition.",
+                hero_button: "Explore Expeditions",
+                overview_title: "Expedition Overview",
+                overview_text: "Join us for a challenging 7-day high-altitude traverse across the majestic Sentry and Mount Olive peaks. This expedition covers approximately 2,500m of vertical gain and requires participants to be equipped with expert-level mountaineering skills, including technical ice climbing proficiency. Safety protocols and gear checks are mandatory.",
+                itinerary_title: "Detailed Itinerary",
+                itinerary_day1: "Day 1: Basecamp Setup and Orientation (Elevation: 1,800m)",
+                itinerary_day2: "Day 2: Ascent to Sentry's Ridge (High-Wind Potential)",
+                itinerary_day3: "Day 3: Technical Traverse to Mt. Olive West Face (Ice climbing required)",
+                itinerary_day4: "Day 4: Summit Day (Mt. Olive, 3,250m) & Descent to Camp Delta",
+                itinerary_day5: "Day 5: Recovery and Environmental Study",
+                itinerary_day6: "Day 6: Final Descent Stage I (River and Canyon Crossing)",
+                itinerary_day7: "Day 7: Trek to Extraction Point & Departure",
+                gallery_title: "Expedition Photo Gallery",
+                map_title: "Geographic Location Map",
+                image1_caption: "The Sentry Peak, viewed during initial approach.",
+                image2_caption: "Climbing Mt. Olive's challenging west face.",
+                image3_caption: "Team check-in during field deployment.",
+                cta_ready_title: "Ready to Climb?",
+                cta_ready_text: "Secure your spot on this epic seven-day journey.",
+                cta_button_text: "Book Your Expedition",
+            },
+            fr: {
+                site_title: "Guides d'Élévation",
+                lang_toggle: "Switch to English",
+                hero_title: "Conquérez les Sommets : Traversée La Sentinelle - Mont Olive",
+                hero_subtitle: "Vivez l'ultime expédition d'alpinisme de 7 jours à haute altitude.",
+                hero_button: "Explorer les Expéditions",
+                overview_title: "Aperçu de l'Expédition",
+                overview_text: "Rejoignez-nous pour une traversée exigeante de 7 jours à haute altitude à travers les sommets majestueux de La Sentinelle et du Mont Olive. Cette expédition couvre environ 2 500 m de dénivelé positif et nécessite des participants possédant des compétences d'alpinisme de niveau expert, y compris une maîtrise de l'escalade technique sur glace. Les protocoles de sécurité et la vérification de l'équipement sont obligatoires.",
+                itinerary_title: "Itinéraire Détaillé",
+                itinerary_day1: "Jour 1 : Installation et orientation du Camp de Base (Altitude : 1,800m)",
+                itinerary_day2: "Jour 2 : Ascension de la Crête de la Sentinelle (Potentiel de vent fort)",
+                itinerary_day3: "Jour 3 : Traversée technique vers la face Ouest du Mont Olive (Escalade sur glace requise)",
+                itinerary_day4: "Jour 4 : Jour du Sommet (Mont Olive, 3,250m) et Descente au Camp Delta",
+                itinerary_day5: "Jour 5 : Récupération et étude environnementale",
+                itinerary_day6: "Jour 6 : Descente Finale Étape I (Traversée de rivière et de canyon)",
+                itinerary_day7: "Jour 7 : Trek vers le Point d'Extraction et Départ",
+                gallery_title: "Galerie de Photos d'Expédition",
+                map_title: "Carte de Localisation Géographique",
+                image1_caption: "Le Pic Sentinelle, vue lors de l'approche initiale.",
+                image2_caption: "Ascension de la face ouest exigeante du Mont Olive.",
+                image3_caption: "Contrôle de l'équipe pendant le déploiement sur le terrain.",
+                cta_ready_title: "Prêt à grimper ?",
+                cta_ready_text: "Réservez votre place pour ce voyage épique de sept jours.",
+                cta_button_text: "Réservez votre expédition",
+            }
+        };
+
+        let currentLang = 'en';
+
+        // Function to apply translation
+        function translatePage() {
+            currentLang = currentLang === 'en' ? 'fr' : 'en';
+            const data = contentData[currentLang];
+
+            // Update all elements with data-i18n attribute
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                // Ensure text is only updated if the data key exists to prevent errors
+                if (data[key] !== undefined) {
+                    element.innerHTML = data[key];
+                }
+            });
+
+            // Update the language toggle button text
+            document.getElementById('lang-toggle-btn').textContent = data.lang_toggle;
+        }
+
+        // Initial content load on window load
+        window.onload = () => {
+             // Set up the initial content to English
+            translatePage();
+            translatePage(); // Call twice to ensure it starts in English as intended
+        };
+    </script>
+
+
+    <!-- HEADER & NAVIGATION - Clean, white header with green accents --><header class="sticky top-0 z-50 p-4 border-b border-gray-200 bg-white shadow-md">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <h1 class="text-2xl md:text-3xl font-extrabold tracking-wide primary-color" data-i18n="site_title">
+                Elevation Guides
+            </h1>
+            <button id="lang-toggle-btn" onclick="translatePage()" class="px-5 py-2 text-sm font-semibold rounded-lg primary-bg text-white hover:bg-green-700 transition duration-300 shadow-lg">
+                Passer au Français
+            </button>
+        </div>
+    </header>
+
+    <!-- HERO SECTION with Large Image --><section class="hero-section h-[500px] flex items-center justify-center text-center text-white mb-12">
+        <div class="hero-overlay absolute inset-0"></div>
+        <div class="relative z-10 max-w-4xl px-4">
+            <h2 class="text-4xl md:text-6xl font-extrabold leading-tight mb-4 drop-shadow-lg" data-i18n="hero_title">
+                Conquer the Peaks: The Sentry - Mt. Olive Traverse
+            </h2>
+            <p class="text-lg md:text-xl mb-8 drop-shadow-md" data-i18n="hero_subtitle">
+                Experience the ultimate 7-day high-altitude mountaineering expedition.
+            </p>
+            <a href="#" class="px-8 py-4 text-lg font-bold rounded-full bg-white text-green-700 hover:bg-gray-100 transition duration-300 shadow-xl transform hover:scale-105" data-i18n="hero_button">
+                Explore Expeditions
+            </a>
+        </div>
+    </section>
+
+    <!-- MAIN CONTENT AREA --><main class="max-w-7xl mx-auto p-4 md:p-8">
+
+        <!-- OVERVIEW and CALL TO ACTION (CTA) --><div class="grid lg:grid-cols-3 gap-8 mb-12">
+            
+            <!-- Mission Overview (Text takes 2/3 width on large screens) --><div class="lg:col-span-2 p-6 bg-white rounded-xl shadow-lg">
+                <h3 class="text-2xl font-bold primary-color mb-4 border-b pb-2" data-i18n="overview_title">
+                    Expedition Overview
+                </h3>
+                <p class="text-gray-700 leading-relaxed" data-i18n="overview_text">
+                    Join us for a challenging 7-day high-altitude traverse across the majestic Sentry and Mount Olive peaks. This expedition covers approximately 2,500m of vertical gain and requires participants to be equipped with expert-level mountaineering skills, including technical ice climbing proficiency. Safety protocols and gear checks are mandatory.
+                </p>
+            </div>
+
+            <!-- Simple CTA Card (1/3 width) --><div class="lg:col-span-1 p-6 primary-bg rounded-xl shadow-xl text-white flex flex-col justify-between">
+                <div>
+                    <h3 class="text-xl font-bold mb-3" data-i18n="cta_ready_title">Ready to Climb?</h3>
+                    <p class="text-green-100 mb-6" data-i18n="cta_ready_text">Secure your spot on this epic seven-day journey.</p>
+                </div>
+                <a href="#" class="block text-center px-6 py-3 font-semibold rounded-full bg-white text-green-700 hover:bg-gray-100 transition duration-300 shadow-md" data-i18n="cta_button_text">
+                    Book Your Expedition
+                </a>
+            </div>
+        </div>
+
+        <!-- ITINERARY / GALLERY SECTION --><div class="grid md:grid-cols-2 gap-8 mb-12">
+            <!-- Itinerary Card --><div class="p-6 bg-white rounded-xl shadow-lg border-l-4 border-blue-500">
+                <h3 class="text-3xl font-extrabold text-blue-600 mb-6" data-i18n="itinerary_title">
+                    Detailed Itinerary
+                </h3>
+                <ul class="space-y-4 text-gray-700">
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-blue-500 mr-3 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l3 3a1 1 0 001.414-1.414L11 9.586V6z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
+                        <span data-i18n="itinerary_day1">Day 1: Basecamp Setup and Orientation (Elevation: 1,800m)</span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-blue-500 mr-3 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l3 3a1 1 0 001.414-1.414L11 9.586V6z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
+                        <span data-i18n="itinerary_day2">Day 2: Ascent to Sentry's Ridge (High-Wind Potential)</span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-blue-500 mr-3 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l3 3a1 1 0 001.414-1.414L11 9.586V6z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
+                        <span data-i18n="itinerary_day3">Day 3: Technical Traverse to Mt. Olive West Face (Ice climbing required)</span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-blue-500 mr-3 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l3 3a1 1 0 001.414-1.414L11 9.586V6z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
+                        <span data-i18n="itinerary_day4">Day 4: Summit Day (Mt. Olive, 3,250m) & Descent to Camp Delta</span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-blue-500 mr-3 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l3 3a1 1 0 001.414-1.414L11 9.586V6z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
+                        <span data-i18n="itinerary_day5">Day 5: Recovery and Environmental Study</span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-blue-500 mr-3 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l3 3a1 1 0 001.414-1.414L11 9.586V6z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
+                        <span data-i18n="itinerary_day6">Day 6: Final Descent Stage I (River and Canyon Crossing)</span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-blue-500 mr-3 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l3 3a1 1 0 001.414-1.414L11 9.586V6z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
+                        <span data-i18n="itinerary_day7">Day 7: Trek to Extraction Point & Departure</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Image Gallery / Visual Archives --><div class="p-6 bg-white rounded-xl shadow-lg border-r-4 border-green-500">
+                <h3 class="text-3xl font-extrabold primary-color mb-6" data-i18n="gallery_title">
+                    Expedition Photo Gallery
+                </h3>
+                <div class="grid grid-cols-3 gap-3">
+                    <!-- Image 1 --><figure>
+                        <img src="https://images.squarespace-cdn.com/content/v1/583287a3b3db2be72ddaef67/1515637041598-PX19CM6NE3EHD8R68208/Sentry+Jan+2018.jpeg?format=500w"
+                             alt="Sentry Peak"
+                             class="w-full h-32 object-cover rounded-md shadow-md hover:opacity-75 transition duration-300 transform hover:scale-[1.05]"
+                             onerror="this.onerror=null;this.src='https://placehold.co/500x320/e0e0e0/333333?text=Image+1';"
+                        >
+                        <figcaption class="text-xs text-center mt-1 text-gray-500" data-i18n="image1_caption">The Sentry Peak, viewed during initial approach.</figcaption>
+                    </figure>
+
+                    <!-- Image 2 --><figure>
+                        <img src="https://images.squarespace-cdn.com/content/v1/583287a3b3db2be72ddaef67/1555194465416-SPX78XYFQXWW7LQKYNOI/Mt.%2BOlive.jpg?format=1000w"
+                             alt="Mt. Olive"
+                             class="w-full h-32 object-cover rounded-md shadow-md hover:opacity-75 transition duration-300 transform hover:scale-[1.05]"
+                             onerror="this.onerror=null;this.src='https://placehold.co/500x320/e0e0e0/333333?text=Image+2';"
+                        >
+                        <figcaption class="text-xs text-center mt-1 text-gray-500" data-i18n="image2_caption">Climbing Mt. Olive's challenging west face.</figcaption>
+                    </figure>
+
+                    <!-- Image 3 --><figure>
+                        <img src="https://images.squarespace-cdn.com/content/v1/583287a3b3db2be72ddaef67/1557357188999-0VJJ2IJK12KNS8H72FWT/Elevation+Guides_CHAN+DONG+May+2019_20.jpeg?format=2500w"
+                             alt="Field Deployment"
+                             class="w-full h-32 object-cover rounded-md shadow-md hover:opacity-75 transition duration-300 transform hover:scale-[1.05]"
+                             onerror="this.onerror=null;this.src='https://placehold.co/500x320/e0e0e0/333333?text=Image+3';"
+                        >
+                        <figcaption class="text-xs text-center mt-1 text-gray-500" data-i18n="image3_caption">Team check-in during field deployment.</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- EMBEDDED MAP SECTION --><div class="mb-12 p-6 bg-white rounded-xl shadow-lg">
+             <h3 class="text-3xl font-extrabold text-gray-800 mb-6 border-b pb-2" data-i18n="map_title">
+                Geographic Location Map
+            </h3>
+            <div class="w-full h-[400px] md:h-[600px] lg:h-[700px] rounded-lg overflow-hidden shadow-inner border border-gray-200">
+                <!-- Provided Google Maps Iframe --><iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d321803.8783045738!2d-114.6122469200928!3d50.940496831480104!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sca!4v1762188448976!5m2!1sen!2sca"
+                    width="100%"
+                    height="100%"
+                    style="border:0;"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER --><footer class="p-6 bg-gray-900 text-center text-sm text-gray-400">
+        <p>Elevation Guides — Providing world-class mountaineering experiences.</p>
+        <p class="mt-1 text-xs">© 2025 All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
